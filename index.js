@@ -14,17 +14,29 @@ io.on('connection', (socket) => {
 
   // Default username
   socket.username = 'Anonymous';
-  socket.room = 'lobby'
+  socket.room = '/';
 
   socket.emit('welcome', { message: 'Welcome to terminal chat' });
+
+  socket.on('chat message', (msg) => io.emit('chat message', msg));
 
   socket.on('change_username', ({ username }) => {
     socket.username = username;
   });
 
-  socket.on('change_room', ({ room }) => {
-    socket.room = room;
-  });
+  // socket.on('change_room', ({ room }) => {
+  //   socket.room = room;
+  //   socket.createRoom();
+  // });
+
+  // socket.createRoom = () => {
+  //   console.log('in createRoom!');
+  //   var nsp = io.of(`/${socket.room}`);
+  //   nsp.on('connection', (socket) => {
+  //     console.log(`someone connected to ${socket}`);
+  //   });
+  //   nsp.emit('hi', 'everyone!');
+  // }
 
   socket.on('disconnect', () => console.log('user disconnected'));
 });

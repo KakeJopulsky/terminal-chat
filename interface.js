@@ -2,10 +2,6 @@ const readline = require('readline');
 const socketio = require('socket.io-client');
 const color = require('ansi-colors');
 
-var socket = socketio.connect('http://localhost:3000');
-
-// let username = '';
-
 const rl = readline.createInterface(process.stdin, process.stdout);
 
 // Use this function to log to console
@@ -16,42 +12,24 @@ const console_out = (msg) => {
   rl.prompt(true);
 };
 
-// Set username
-// const setUsername = () => {
-//   rl.question('Enter your username: ', (username) => {
-//     let msg = `${username} has connected!`;
-//     socket.emit('send', { type: 'notice', message: msg });
-//     rl.prompt(true);
-//   });
-// }
-
-// rl.on('line', (line) => {
-//   socket.emit('send', { type: 'chat', line: line, username: username});
-//   rl.prompt(true);
-// });
-
-// socket.on('message', (data) => {
-//     console.log(data);
-//     // if (data.type === 'chat') {
-//     //   console_out(`${data.username}: ${data.message}`);
-//     // }
-// });
-
-// socket.on('welcome', ({ message }) => {
-//   console_out('/////////////////');
-//   console_out(message);
-//   console_out('/////////////////');
-//   // setUsername();
-//   // socket.emit('my other event', { my: 'data' });
-// });
-
 const Client = function() {
-  this.username = "Anonymous";
-  this.room = "lobby";
+  this.username = 'Anonymous';
+  this.room = '';
+  this.socket = socketio.connect(`http://localhost:3000/${this.room}`);
+  this.connected = false;
+
+  this.socket.on('chat message', (msg) => console_out(msg));
+
+  // rl.on('line', (input) => {
+  //   if (this.connected) {
+  //     this.chat(input);
+  //   }
+  //   rl.prompt(true);
+  // });
 }
 
 Client.prototype.connect = function() {
-  socket.on('welcome', (data) => {
+  this.socket.on('welcome', (data) => {
     console_out('/////////////////');
     console_out(data.message);
     console_out('/////////////////');
@@ -61,19 +39,43 @@ Client.prototype.connect = function() {
 
 Client.prototype.setUsername = function() {
   rl.question('Enter your username: ', (username) => {
-    socket.emit('change_username', { username: username });
+    this.socket.emit('change_username', { username: username });
     this.username = username;
-    this.setRoom();
+    this.promptInput();
+    // this.connected = true;
+    // this.setRoom();
+    // this.chat();
+    rl.prompt(true);
   });
 }
 
 Client.prototype.setRoom = function() {
   rl.question('Room: ', (room) => {
-    socket.emit('change_room', { room: room });
+    this.socket.emit('change_room', { room: room });
     this.room = room;
-    rl.prompt(true);
+    // rl.prompt(true);
   });
+}
+
+Client.prototype.promptInput = function() {
+  rl.question(`(${this.username}): `, (input) => {
+    this.send(input);
+    rl.prompt(true);
+  })
+}
+
+Client.prototype.send = function(msg) {
+  this.socket.emit('chat message', msg);
+  this.promptInput();
 }
 
 let newConnection = new Client();
 newConnection.connect();
+
+
+// socket.on('message', (data) => {
+//     console.log(data);
+//     // if (data.type === 'chat') {
+//     //   console_out(`${data.username}: ${data.message}`);
+//     // }
+// });
