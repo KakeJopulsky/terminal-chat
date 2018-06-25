@@ -17,6 +17,9 @@
   },
   "homepage": "https://github.com/KakeJopulsky/terminal-chat#readme",
   "dependencies": {
-    "express": "^4.16.3"
+    "ansi-colors": "^2.0.1",
+    "express": "^4.16.3",
+    "socket.io": "^2.1.1",
+    "socket.io-client": "^2.1.1"
   }
 }
