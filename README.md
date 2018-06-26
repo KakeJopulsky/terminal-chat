@@ -6,9 +6,11 @@
 
 ## To run:
 
-> npm install
-> npm start
-> npm run client
+```
+  npm install
+  npm start
+  npm run client
+```
 
 Open as many client windows as you wish.
 
