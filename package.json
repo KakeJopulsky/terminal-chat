@@ -4,7 +4,8 @@
   "description": "Command line chat interface",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "client": "node interface.js"
   },
   "repository": {
     "type": "git",
