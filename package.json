@@ -1,7 +1,7 @@
 {
-  "name": "terminal-chat",
+  "name": "node-chat",
   "version": "1.0.0",
-  "description": "Command line chat interface",
+  "description": "Command line chat interface built with Node and Socket.io",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",

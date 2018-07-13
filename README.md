@@ -4,11 +4,12 @@
 
 > ![screencap](https://i.imgur.com/4P4E2WT.png)
 
+> The server is deployed to heroku, and canbe slow to start!
+
 ## To run:
 
 ```
   npm install
-  npm start
   npm run client
 ```
 
