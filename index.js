@@ -2,7 +2,8 @@ const app = require('express')();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 
-http.listen(3000);
+http.listen(process.env.PORT || 3000);
+console.log('WE ARE ALIVE');
 
 io.on('connection', (socket) => {
   console.log('a user connected');
@@ -16,7 +17,6 @@ io.on('connection', (socket) => {
     let greeting = 'Welcome to cmd-line chat';
 
     socket.join(room);
-    // socket.to('game').emit('nice game', "let's play a game");
     socket.emit('message', { user: 'Admin', msg: greeting, room: socket.room });
     socket.broadcast.to(room).emit('message', { user: 'Admin', msg: `${username} has joined` }); 
   });

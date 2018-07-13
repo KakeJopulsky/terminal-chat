@@ -3,13 +3,14 @@ const socketio = require('socket.io-client');
 const color = require('ansi-colors');
 
 const rl = readline.createInterface(process.stdin, process.stdout);
+const PORT = process.env.PORT || 3000;
 
 const Client = function() {
   this.username = '';
   this.room = '';
   this.color = '';
 
-  this.socket = socketio.connect(`http://localhost:3000/`);
+  this.socket = socketio.connect(`https://terminal-chat-server.herokuapp.com/:${PORT}/`);
   this.socket.on('message', ({ user, msg, room }) => this.console_out(user, msg, room));
 }
 
@@ -56,15 +57,3 @@ Client.prototype.sendMessage = function(msg) {
 
 let newConnection = new Client();
 newConnection.init();
-
-
-/*
-
-console.log('Which color would you like?');
-      console.log(`${color.green('green')} / ${color.yellow('yellow')} / ${color.blue('blue')} / ${color.magenta('magenta')} / ${color.cyan('cyan')} / ${color.white('white')}`);
-      rl.question('> ', (color) => {
-        this.color = color;
-        this.connect();
-      });
-
-*/
