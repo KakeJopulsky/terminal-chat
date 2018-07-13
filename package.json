@@ -1,8 +1,8 @@
 {
-  "name": "node-chat",
-  "version": "1.0.0",
+  "name": "cmd-line-chat",
+  "version": "1.0.2",
   "description": "Command line chat interface built with Node and Socket.io",
-  "main": "index.js",
+  "main": "interface.js",
   "scripts": {
     "start": "node index.js",
     "client": "node interface.js"
