@@ -10,7 +10,7 @@ const Client = function() {
   this.room = '';
   this.color = '';
 
-  this.socket = socketio.connect(`https://terminal-chat-server.herokuapp.com/:${PORT}/`);
+  this.socket = socketio.connect(`https://terminal-chat-server.herokuapp.com/:${PORT}/${this.room}`);
   this.socket.on('message', ({ user, msg, room }) => this.console_out(user, msg, room));
 }
 
