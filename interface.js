@@ -3,14 +3,13 @@ const socketio = require('socket.io-client');
 const color = require('ansi-colors');
 
 const rl = readline.createInterface(process.stdin, process.stdout);
-const PORT = process.env.PORT || 3000;
 
 const Client = function() {
   this.username = '';
   this.room = '';
   this.color = '';
 
-  this.socket = socketio.connect(`https://terminal-chat-server.herokuapp.com/:${PORT}/${this.room}`);
+  this.socket = socketio.connect(`https://terminal-chat-server.herokuapp.com/`);
   this.socket.on('message', ({ user, msg, room }) => this.console_out(user, msg, room));
 }
 
